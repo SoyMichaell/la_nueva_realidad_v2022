@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpresaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioController;
@@ -25,4 +26,5 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('usuario', UsuarioController::class);
+    Route::resource('empresa', EmpresaController::class);
 });

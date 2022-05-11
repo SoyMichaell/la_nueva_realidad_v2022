@@ -5,7 +5,7 @@ var __webpack_exports__ = {};
   \****************************************/
 $(document).on('click', '.edit-profile', function (event) {
   $('#editProfileUserId').val(loggedInUser.id);
-  $('#pfName').val(loggedInUser.name);
+  $('#pfName').val(loggedInUser.nombre);
   $('#pfEmail').val(loggedInUser.email);
   $('#EditProfileModal').appendTo('body').modal('show');
 });

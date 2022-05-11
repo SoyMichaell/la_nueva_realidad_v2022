@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('usuarios.crear')
     <section class="section">
         <div class="section-header">
             <h4 class="page__heading">Usuarios</h4>
@@ -12,7 +13,8 @@
                     <p class="section-lead">Listado de usuarios vinculados al proyecto la nueva realidad</p>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-primary" href="#"><i class="fas fa-plus-circle"></i> Nuevo</a>
+                    <a class="btn btn-primary create-user">
+                        <i class="fa fa-plus-circle"></i> Nuevo</a>
                 </div>
             </div>
             <div class="row">
@@ -35,6 +37,7 @@
                                             <th>Telefono</th>
                                             <th>Rol</th>
                                             <th>Estado</th>
+                                            <th>--</th>
                                         </tr>
                                         <?php $i=1; ?>
                                         @foreach ($usuarios as $usuario)
@@ -47,7 +50,17 @@
                                                 <td>{{$usuario->email}}</td>
                                                 <td>{{$usuario->telefono}}</td>
                                                 <td><p class="badge bg-info text-white">{{$usuario->nombre_rol}}</p></td>
-                                                <td><p class="badge {{$usuario->estado == 'activo' ? 'bg-success' : 'bg-danger'}} text-white">{{Str::ucfirst($usuario->estado)}}</p></td>
+                                                <td><p class="badge {{$usuario->estado == 'activo' ? 'bg-success' : 'bg-danger'}} text-white">{{$usuario->estado}}</p></td>
+                                                <td>
+                                                    <form action="{{url("usuario/{$usuario->idUser}")}}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                        <!--<a class="edit-user btn btn-info" data-id="{{$usuario->idUser}}"><i class="fas fa-edit"></i></a>-->
+                                                    </form>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
