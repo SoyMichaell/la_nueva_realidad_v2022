@@ -26,7 +26,8 @@ class User extends Authenticatable
         'nivel_programa',
         'programa',
         'rol',
-        'estado'
+        'estado',
+        'slug'
     ];
 
     protected $hidden = [

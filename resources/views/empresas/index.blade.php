@@ -20,7 +20,26 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Listado de empresas registrados</h4>
+                            <div class="row w-100">
+                                <div class="col-md-6">
+                                    <h4>Listado de empresas registrados</h4>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-end">
+                                    <form action="{{route('empresa.index')}}" method="get">
+                                        <div class="row">
+                                            <div class="form-row">
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" placeholder="Buscar..."
+                                                        name="buscar" value="{{$busqueda}}" id="buscar">
+                                                </div>
+                                                <div class="col-auto">
+                                                    <input type="submit" class="btn btn-primary" value="Buscar">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -34,51 +53,38 @@
                                             <th>Telefono</th>
                                             <th>Dirección</th>
                                             <th>Municipio</th>
+                                            <th>Estado</th>
                                             <th>--</th>
                                         </tr>
-                                        <?php $i=1; ?>
                                         @foreach ($empresas as $empresa)
-                                        <tr>
-                                            <td>{{$i++}}</td>
-                                            <td>{{$empresa->nit}}</td>
-                                            <td>{{Str::ucfirst($empresa->razon_social)}}</td>
-                                            <td>{{$empresa->correo}}</td>
-                                            <td>{{$empresa->telefono1}}</td>
-                                            <td>{{$empresa->direccion}}</td>
-                                            <td>{{$empresa->municipio}}</td>
-                                            <td>
-                                                <form action="{{url("empresa/{$empresa->id}")}}" method="post">
-                                                    <a class="btn btn-info" href="#"><i class="fas fa-edit"></i></a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button class="btn btn-danger" type="submit">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>{{ $empresa->id }}</td>
+                                                <td>{{ $empresa->nit }}</td>
+                                                <td>{{ Str::ucfirst($empresa->razon_social) }}</td>
+                                                <td>{{ $empresa->correo }}</td>
+                                                <td>{{ $empresa->telefono1 }}</td>
+                                                <td style="width: 10%">{{ $empresa->direccion }}</td>
+                                                <td>{{ $empresa->municipio }}</td>
+                                                <td><p class="{{$empresa->estado == 'seleccionado' ? 'badge bg-success text-white' : 'badge bg-danger text-white'}}">{{ $empresa->estado}}</p></td>
+                                                <td>
+                                                    <form action="{{ url("empresa/{$empresa->id}") }}" method="post">
+                                                        <a class="btn btn-info" href="#"><i
+                                                                class="fas fa-edit"></i></a>
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="d-flex justify-content-end">
+                                    {{$empresas->links()}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-footer text-right">
-                            <nav class="d-inline-block">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>

@@ -9,10 +9,20 @@ use Illuminate\Support\Facades\DB;
 class EmpresaController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $empresas = DB::table('empresas')->paginate(10);
-        return view('empresas.index')->with('empresas', $empresas);
+        $busqueda = trim($request->get('buscar'));
+        $empresas = DB::table('empresas')
+            ->where('nit', 'LIKE','%'.$busqueda.'%')
+            ->orWhere('razon_social', 'LIKE','%'.$busqueda.'%')
+            ->orWhere('correo', 'LIKE','%'.$busqueda.'%')
+            ->orWhere('telefono1', 'LIKE','%'.$busqueda.'%')
+            ->orWhere('direccion', 'LIKE','%'.$busqueda.'%')
+            ->orWhere('municipio', 'LIKE','%'.$busqueda.'%')
+            ->orderBy('id','asc')
+            ->orderBy('razon_social','asc')
+            ->paginate(20);
+        return view('empresas.index', compact('empresas','busqueda'));
     }
 
 
