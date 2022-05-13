@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h4 class="page__heading">Empresas</h4>
+            <h1 class="page__heading">Empresas</h1>
         </div>
         <div class="section-body">
             <div class="row">
@@ -12,7 +12,7 @@
                     <p class="section-lead">Listado de empresas</p>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-primary create-user">
+                    <a class="btn btn-primary" href="/empresa/create">
                         <i class="fa fa-plus-circle"></i> Nuevo</a>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-md">
+                                <table class="table table-bordered table-striped table-md">
                                     <tbody>
                                         <tr>
                                             <th>#</th>
@@ -56,6 +56,9 @@
                                             <th>Estado</th>
                                             <th>--</th>
                                         </tr>
+                                        @if (count($empresas)<=0)
+                                             <td class="text-center" colspan="9">No hay registros</td>   
+                                        @endif
                                         @foreach ($empresas as $empresa)
                                             <tr>
                                                 <td>{{ $empresa->id }}</td>
@@ -68,7 +71,7 @@
                                                 <td><p class="{{$empresa->estado == 'seleccionado' ? 'badge bg-success text-white' : 'badge bg-danger text-white'}}">{{ $empresa->estado}}</p></td>
                                                 <td>
                                                     <form action="{{ url("empresa/{$empresa->id}") }}" method="post">
-                                                        <a class="btn btn-info" href="#"><i
+                                                        <a class="btn btn-info" href="{{route('empresa.edit', $empresa->id)}}"><i
                                                                 class="fas fa-edit"></i></a>
                                                         @csrf
                                                         @method('DELETE')
