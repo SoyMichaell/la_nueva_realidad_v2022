@@ -25,12 +25,12 @@
                                     <h4>Listado de empresas registrados</h4>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end">
-                                    <form action="{{route('empresa.index')}}" method="get">
+                                    <form action="{{ route('empresa.index') }}" method="get">
                                         <div class="row">
                                             <div class="form-row">
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control" placeholder="Buscar..."
-                                                        name="buscar" value="{{$busqueda}}" id="buscar">
+                                                        name="buscar" value="{{ $busqueda }}" id="buscar">
                                                 </div>
                                                 <div class="col-auto">
                                                     <input type="submit" class="btn btn-primary" value="Buscar">
@@ -56,8 +56,8 @@
                                             <th>Estado</th>
                                             <th>--</th>
                                         </tr>
-                                        @if (count($empresas)<=0)
-                                             <td class="text-center" colspan="9">No hay registros</td>   
+                                        @if (count($empresas) <= 0)
+                                            <td class="text-center" colspan="9">No hay registros</td>
                                         @endif
                                         @foreach ($empresas as $empresa)
                                             <tr>
@@ -68,10 +68,15 @@
                                                 <td>{{ $empresa->telefono1 }}</td>
                                                 <td style="width: 10%">{{ $empresa->direccion }}</td>
                                                 <td>{{ $empresa->municipio }}</td>
-                                                <td><p class="{{$empresa->estado == 'seleccionado' ? 'badge bg-success text-white' : 'badge bg-danger text-white'}}">{{ $empresa->estado}}</p></td>
+                                                <td>
+                                                    <p
+                                                        class="{{ $empresa->estado == 'seleccionado' ? 'badge bg-success text-white' : 'badge bg-danger text-white' }}">
+                                                        {{ $empresa->estado }}</p>
+                                                </td>
                                                 <td>
                                                     <form action="{{ url("empresa/{$empresa->id}") }}" method="post">
-                                                        <a class="btn btn-info" href="{{route('empresa.edit', $empresa->id)}}"><i
+                                                        <a class="btn btn-info"
+                                                            href="{{ route('empresa.edit', $empresa->id) }}"><i
                                                                 class="fas fa-edit"></i></a>
                                                         @csrf
                                                         @method('DELETE')
@@ -85,7 +90,7 @@
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-end">
-                                    {{$empresas->links()}}
+                                    {{ $empresas->links() }}
                                 </div>
                             </div>
                         </div>

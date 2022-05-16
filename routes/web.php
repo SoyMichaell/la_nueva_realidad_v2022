@@ -5,6 +5,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EncuestaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 
 /*
@@ -27,10 +28,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('diagnostico/{nit}/analisis', [DiagnosticoController::class, 'analisis']);
+Route::post('diagnostico/mision', [DiagnosticoController::class, 'mision']);
 
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('usuario', UsuarioController::class);
     Route::resource('empresa', EmpresaController::class);
     Route::resource('encuesta', EncuestaController::class);
     Route::resource('diagnostico', DiagnosticoController::class);
+    Route::resource('rol', RolController::class);
 });

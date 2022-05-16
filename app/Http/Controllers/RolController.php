@@ -2,51 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rol;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class RolController extends Controller
 {
-    function __construct()
-    {
-        $this->middleware('permission:ver-rol|crear-rol|editar-rol|borrar-rol',['only'=>['index']]);
-        $this->middleware('permission:crear-rol',['only'=>['create','store']]);
-        $this->middleware('permission:editar-rol',['only'=>['edit','update']]);
-        $this->middleware('permission:borrar-rol',['only'=>['destroy']]);
-    }
-
     public function index()
     {
-        $roles = Role::paginate(5);
+        $roles = Rol::all();
         return view('roles.index', compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $permission = Permission::get();
-        return view('roles.crear', compact('permission'));
+        $permisos = DB::table('permisos')->get();
+        return view('roles.crear', compact('permisos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required', 'permission' => 'required']);
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $role = DB::table('roles')->insert(['nombre_rol' => $request->get('nombre_rol')]);
+        $id = DB::getPdo()->lastInsertId();
 
-        return redirect()->route('roles.index');
+        if ($role == 0) {
+            foreach ($request->get('permisos_rol') as $rol) {
+                DB::table('roles_permisos')->insert([
+                    'id_rol' => $id,
+                    'id_permiso' => $rol
+                ]);
+            }
+            Alert::success('Exitoso', 'Rol creado con exito');
+            return redirect('/rol');
+        } else {
+            Alert::warning('Advertencia');
+            return redirect('/rol');
+        }
     }
 
     public function show($id)
@@ -56,35 +48,40 @@ class RolController extends Controller
 
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)
-        ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-        ->all();
-        return view('roles.editar', compact('role','permission','rolePermissions'));
+        $rol = Rol::find($id);
+        $permisos = DB::table('permisos')->get();
+        $has_rol_permiso = DB::table('roles_permisos')->where('id_rol', $id)->get();
+        return view('roles.editar', compact('rol', 'permisos', 'has_rol_permiso'));
     }
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['name' => 'required', 'permission' => 'required']);
 
-        $role = Role::find($id);
-        $role->name = $request->input('name');
+        $permisos = DB::table('roles_permisos')->where('id_rol', $id)->get();
 
-        $role->save();
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index');
+        if (count($permisos) <= 0) {
+            foreach ($request->get('permisos_rol') as $rol) {
+                DB::table('roles_permisos')->insert([
+                    'id_rol' => $id,
+                    'id_permiso' => $rol
+                ]);
+            }
+        } else {
+            foreach ($request->get('permisos_rol') as $rol) {
+                DB::table('roles_permisos')->where('id_rol', $id)->update([
+                    'id_permiso' => $rol
+                ]);
+            }
+        }
+        Alert::success('Exitoso', 'El rol se ha actualizado');
+        return redirect('/rol');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
+        DB::table('roles_permisos')->where('id_rol', $id)->delete();
         DB::table('roles')->where('id', $id)->delete();
-        return redirect()->route('roles.index');
+        Alert::success('Exitoso', 'El rol se ha eliminado');
+        return redirect('/rol');
     }
 }
