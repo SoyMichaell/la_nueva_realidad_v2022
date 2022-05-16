@@ -83,6 +83,7 @@ class EmpresaController extends Controller
             'autorizacion' => $request->get('autorizacion'),
             'year' => $request->get('year'),
             'estado' => $request->get('estado'),
+            'estado_35' => $request->get('estado_35')
         ]);
 
         Alert::success('Exitoso', 'El registro se ha realizado con exito');
@@ -157,6 +158,7 @@ class EmpresaController extends Controller
             'autorizacion' => $request->get('autorizacion'),
             'year' => $request->get('year'),
             'estado' => $request->get('estado'),
+            'estado_35' => $request->get('estado_35')
         ]);
 
         Alert::success('Exitoso', 'El registro se ha actualizado con exito');

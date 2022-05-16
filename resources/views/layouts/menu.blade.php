@@ -1,27 +1,49 @@
-<li class="menu-header">PRINCIPALES</li>
-<li class="side-menus {{ Request::is('home') ? 'active' : '' }}">
+<li class="menu-header">DASHBOARD</li>
+<li class="side-menus {{ Request::is('dashboard') ? 'active' : '' }}">
     <a class="nav-link" href="/">
         <i class=" fas fa-building"></i><span>Dashboard</span>
     </a>
+</li>
+<li class="menu-header">CONFIGURACIÓN</li>
+<li class="side-menus">
+<li class="{{ Request::is('usuario') ? 'active' : '' }}">
     <a class="nav-link" href="/usuario">
         <i class=" fas fa-users"></i><span>Usuarios</span>
     </a>
-    <a class="nav-link" href="/rol">
+</li>
+<li class="{{ Request::is('rol') ? 'active' : '' }}">
+    <a class="nav-link {{ Request::is('rol') ? 'active' : '' }}" href="/rol">
         <i class="fas fa-key"></i><span>Roles</span>
     </a>
+</li>
+<li class="{{ Request::is('empresa') ? 'active' : '' }}">
     <a class="nav-link" href="/empresa">
         <i class="fas fa-landmark"></i><span>Empresas</span>
     </a>
+</li>
+<li class="{{Request::is('encuesta') ? 'active' : '' }}">
     <a class="nav-link" href="/encuesta">
         <i class="fab fa-wpforms"></i><span>Aplicativo encuesta</span>
     </a>
 </li>
+
+</li>
 <li class="menu-header">DIAGNÓSTICOS</li>
 <li class="dropdown">
-    <a href="" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i><span>Diagnostico</span></a>
+    <a href="" class="nav-link has-dropdown" data-toggle="dropdown"><i
+            class="fas fa-columns"></i><span>Diagnostico</span></a>
     <ul class="dropdown-menu">
         <li>
-            <a class="nav-link" href="/diagnostico">Diagnostico global</a>
+            <a class="nav-link" href="/diagnostico/fase1">Diagnostico fase I</a>
+        </li>
+        <li>
+            <a class="nav-link" href="/diagnostico/individual">Análisis individual</a>
+        </li>
+        <li>
+            <a class="nav-link" href="/diagnostico/planaccion">Plan de acción</a>
+        </li>
+        <li>
+            <a class="nav-link" href="/diagnostico/dofa">Matriz DOFA</a>
         </li>
     </ul>
 </li>

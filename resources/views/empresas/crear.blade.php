@@ -285,9 +285,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="estado">Estado:</label><span class="text-danger">*</span>
+                                    <label for="estado">Estado muestra 375:</label><span class="text-danger">*</span>
                                     <select class="form-control {{ $errors->has('estado') ? ' is-invalid' : '' }}" name="estado" id="estado">
                                         <option value="">---- SELECCIONE ----</option>
                                         <option value="seleccionado">Seleccionado</option>
@@ -295,6 +295,19 @@
                                     </select>
                                     <div class="invalid-feedback">
                                         {{ $errors->first('estado') }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="estado_35">Estado muestra 35:</label><span class="text-danger"></span>
+                                    <select class="form-control {{ $errors->has('estado_35') ? ' is-invalid' : '' }}" name="estado_35" id="estado_35">
+                                        <option value="">---- SELECCIONE ----</option>
+                                        <option value="seleccionado">Seleccionado</option>
+                                        <option value="no-seleccionado">No seleccionado</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('estado_35') }}
                                     </div>
                                 </div>
                             </div>

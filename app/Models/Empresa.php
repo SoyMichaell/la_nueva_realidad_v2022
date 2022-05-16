@@ -39,5 +39,6 @@ class Empresa extends Model
         'autorizacion',
         'year',
         'estado',
+        'estado_35'
     ];
 }
