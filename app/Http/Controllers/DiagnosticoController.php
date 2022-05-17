@@ -6,6 +6,7 @@ use App\Models\ResultadoEncuesta;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laravel\Ui\Presets\React;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class DiagnosticoController extends Controller
@@ -145,6 +146,89 @@ class DiagnosticoController extends Controller
             }
     }
 
+    public function perspectivacliente(Request $request, $id){
+        $perspectivacliente = DB::table('diagnostico_individual')->where('nit_empresa', $id)
+            ->update([
+                'preguntac1' => $request->get('preguntac1'),
+                'preguntac2' => $request->get('preguntac2'),
+                'preguntac3' => $request->get('preguntac3'),
+                'preguntac4' => $request->get('preguntac4'),
+                'preguntac4_1' => $request->get('preguntac4_1'),
+                'preguntac5' => $request->get('preguntac5'),
+                'preguntac6' => $request->get('preguntac6'),
+                'preguntac7' => $request->get('preguntac7'),
+                'preguntac8' => $request->get('preguntac8'),
+                'preguntac9' => $request->get('preguntac9'),
+            ]);
+
+            if ($perspectivacliente == 1) {
+                Alert::success('Exitoso', 'La información se ha guardado');
+                return back();
+            } else {
+                Alert::warning('Advertencia', 'No se pudo');
+                return back();
+            }
+    }
+
+    public function perspectivaprocesosinternos(Request $request, $id){
+        $perspectivaprocesosinternos = DB::table('diagnostico_individual')->where('nit_empresa', $id)
+            ->update([
+                'preguntapi1' => $request->get('preguntapi1'),
+                'preguntapi2' => $request->get('preguntapi2'),
+                'preguntapi3' => $request->get('preguntapi3'),
+                'preguntapi3_1' => $request->get('preguntapi3_1'),
+                'preguntapi4' => $request->get('preguntapi4'),
+                'preguntapi4_1' => $request->get('preguntapi4_1'),
+                'preguntapi5' => $request->get('preguntapi5'),
+                'preguntapi6' => $request->get('preguntapi6'),
+                'preguntapi6_1' => $request->get('preguntapi6_1'),
+                'preguntapi7' => $request->get('preguntapi7'),
+                'preguntapi8' => $request->get('preguntapi8'),
+            ]);
+
+            if ($perspectivaprocesosinternos == 1) {
+                Alert::success('Exitoso', 'La información se ha guardado');
+                return back();
+            } else {
+                Alert::warning('Advertencia', 'No se pudo');
+                return back();
+            }
+    }
+
+    public function perspectivafinanciera(Request $request, $id){
+        $perspectivafinanciera = DB::table('diagnostico_individual')->where('nit_empresa', $id)
+            ->update([
+                'preguntapf1' => $request->get('preguntapf1'),
+                'preguntapf1_1' => $request->get('preguntapf1_1'),
+                'preguntapf2' => $request->get('preguntapf2'),
+                'preguntapf2_1' => $request->get('preguntapf2_1'),
+                'preguntapf3' => $request->get('preguntapf3'),
+                'preguntapf3_1' => $request->get('preguntapf3_1'),
+                'preguntapf4' => $request->get('preguntapf4'),
+                'preguntapf5' => $request->get('preguntapf5'),
+                'preguntapf6' => $request->get('preguntapf6'),
+                'preguntapf7' => $request->get('preguntapf7'),
+                'preguntapf8' => $request->get('preguntapf8'),
+                'preguntapf9' => $request->get('preguntapf9'),
+                'preguntapf9_1' => $request->get('preguntapf9_1'),
+                'preguntapf10' => $request->get('preguntapf10'),
+                'preguntapf10_1' => $request->get('preguntapf10_1'),
+                'preguntapf11' => $request->get('preguntapf11'),
+                'preguntapf12' => $request->get('preguntapf12'),
+                'preguntapf13' => $request->get('preguntapf13'),
+                'preguntapf14' => $request->get('preguntapf14'),
+                'preguntapf15' => $request->get('preguntapf15'),
+            ]);
+
+            if ($perspectivafinanciera == 1) {
+                Alert::success('Exitoso', 'La información se ha guardado');
+                return back();
+            } else {
+                Alert::warning('Advertencia', 'No se pudo');
+                return back();
+            }
+    }
+
     public function show($id)
     {
         $empresa = DB::table('resultados')
@@ -157,6 +241,7 @@ class DiagnosticoController extends Controller
     public function analisis($id)
     {
         $empresa = DB::table('empresas')
+            ->join('respuestas','empresas.nit','=','respuestas.nit_empresa')
             ->where('nit', $id)
             ->first();
         $usuarios = User::all();

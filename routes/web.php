@@ -34,7 +34,9 @@ Route::put('diagnostico/{nit}/mision', [DiagnosticoController::class, 'mision'])
 Route::put('diagnostico/{nit}/vision', [DiagnosticoController::class, 'vision']);
 Route::put('diagnostico/{nit}/objestrategico', [DiagnosticoController::class, 'objestrategico']);
 Route::put('diagnostico/{nit}/perspectivacrecimientodesarrollo', [DiagnosticoController::class, 'perspectivacrecimientodesarrollo']);
-
+Route::put('diagnostico/{nit}/perspectivacliente', [DiagnosticoController::class, 'perspectivacliente']);
+Route::put('diagnostico/{nit}/perspectivaprocesosinternos', [DiagnosticoController::class, 'perspectivaprocesosinternos']);
+Route::put('diagnostico/{nit}/perspectivafinanciera', [DiagnosticoController::class, 'perspectivafinanciera']);
 
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('usuario', UsuarioController::class);

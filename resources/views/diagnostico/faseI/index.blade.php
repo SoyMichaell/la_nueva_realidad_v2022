@@ -49,6 +49,7 @@
                                             <th>Nit</th>
                                             <th style="width: ">Razón social</th>
                                             <th>CIIU</th>
+                                            <th>Municipio</th>
                                             <th>Fecha registro encuesta</th>
                                             <th>Resultado</th>
                                             <th>Acciones</th>
@@ -60,6 +61,7 @@
                                                 <td>{{ $empresa->nit_empresa }}</td>
                                                 <td>{{ $empresa->razon_social }}</td>
                                                 <td>{{ $empresa->ciiu }}</td>
+                                                <td>{{ $empresa->municipio}}</td>
                                                 <td>{{ $empresa->fecha_registro_resultado }}</td>
                                                 <td>
                                                     <p
