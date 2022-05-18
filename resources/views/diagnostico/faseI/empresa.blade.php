@@ -13,7 +13,7 @@
                             <thead>
                                 <tr>
                                     <th>Nit</th>
-                                    <td>{{ $empresa->nit }}</td>
+                                    <td>{{ $empresa->nit_empresa }}</td>
                                 </tr>
                                 <tr>
                                     <th>Razón social</th>
@@ -39,6 +39,7 @@
                         </table>
                     </div>
                 </div>
+                <!--Resultado diagnostico global-->
                 <div class="card card-primary">
                     <div class="card-header">Puntaje aplicación encuesta</div>
                     <div class="card-body">
@@ -98,6 +99,7 @@
                         </div>
                     </div>
                 </div>
+                <!--Fin diagnostico global-->
                 <div class="card card-primary">
                     <div class="card-header">Respuesta a la encuesta</div>
                     <div class="card-body">

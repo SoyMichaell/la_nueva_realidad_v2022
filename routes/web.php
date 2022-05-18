@@ -29,8 +29,10 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Auth::routes();
 
 Route::get('diagnostico/fase1', [DiagnosticoController::class, 'index']);
+Route::get('diagnostico/mdofa', [DiagnosticoController::class, 'mdofa']);
 Route::get('diagnostico/{nit}/analisis', [DiagnosticoController::class, 'analisis']);
 Route::get('diagnostico/individual', [DiagnosticoController::class, 'analisis_individual']);
+
 Route::put('diagnostico/{nit}/mision', [DiagnosticoController::class, 'mision']);
 Route::put('diagnostico/{nit}/vision', [DiagnosticoController::class, 'vision']);
 Route::put('diagnostico/{nit}/objestrategico', [DiagnosticoController::class, 'objestrategico']);

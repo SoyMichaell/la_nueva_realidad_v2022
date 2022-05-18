@@ -40,10 +40,10 @@
             <a class="nav-link" href="/diagnostico/individual">Análisis individual</a>
         </li>
         <li>
-            <a class="nav-link" href="/diagnostico/planaccion">Plan de acción</a>
+            <a class="nav-link" href="/diagnostico/mdofa">Matriz DOFA</a>
         </li>
         <li>
-            <a class="nav-link" href="/diagnostico/dofa">Matriz DOFA</a>
+            <a class="nav-link" href="/diagnostico/planaccion">Plan de acción</a>
         </li>
     </ul>
 </li>

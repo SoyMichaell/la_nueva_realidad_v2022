@@ -7,7 +7,7 @@
         $.get(url, function(response) {
             response.forEach(function(data) {
                 municipios.push(data.municipio);
-                totals.push(data.porcentaje);
+                totals.push(data.total);
             });
             const ctx = document.getElementById('grafico_empresa');
             const grafico_empresa = new Chart(ctx, {
@@ -34,6 +34,6 @@
                     },
                 }
             });
-        })
-    })
+        });
+    });
 </script>

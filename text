@@ -3,6 +3,6 @@ https://demo.getstisla.com/components-chat-box.html
 
 
 //consultas
-SELECT SUM(pre3_1_pcd) AS Pregunta1,SUM(pre3_2_pcd),SUM(pre3_3_pcd),SUM(pre3_4_pcd),SUM(pre3_5_pcd),SUM(pre3_6_pcd) FROM respuestas 
+SELECT SUM(pre3_1_pcd),SUM(pre3_2_pcd),SUM(pre3_3_pcd),SUM(pre3_4_pcd),SUM(pre3_5_pcd),SUM(pre3_6_pcd) FROM respuestas 
 SELECT COUNT(*) AS cuenta, municipio, 
 	CONCAT(ROUND((COUNT(*) / (SELECT COUNT(*) FROM empresas) * 100),2), '%' AS porcentaje FROM empresas GROUP BY(municipio)

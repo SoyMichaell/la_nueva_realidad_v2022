@@ -43,27 +43,25 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="table-1">
+                            <table class="table table-bordered table-striped" id="table-1">
                                 <tbody>
                                     <tr>
                                         <th>#</th>
                                         <th>Nit</th>
                                         <th style="width: ">Razón social</th>
-                                        <th>CIIU</th>
                                         <th>Municipio</th>
-                                        <th>Fecha registro encuesta</th>
-                                        <th>Resultado</th>
-                                        <th>Acciones</th>
+                                        <th>Instructor asignado</th>
+                                        <th>Puntaje</th>
+                                        <th>----</th>
                                     </tr>
                                     <?php $i = 1; ?>
                                     @foreach ($empresas as $empresa)
                                         <tr>
                                             <td>{{ $i++ }}</td>
-                                            <td>{{ $empresa->nit_empresa }}</td>
+                                            <td>{{ $empresa->nit }}</td>
                                             <td>{{ $empresa->razon_social }}</td>
-                                            <td>{{ $empresa->ciiu }}</td>
                                             <td>{{ $empresa->municipio }}</td>
-                                            <td>{{ $empresa->fecha_registro_resultado }}</td>
+                                            <td><p class="{{$empresa->nombre == "" ? 'badge badge-warning' : 'badge badge-primary' }}">{{ $empresa->nombre == "" ? 'Sin asignar' : $empresa->nombre.' '.$empresa->apellido}}</p></td>
                                             <td>
                                                 <p
                                                     class="icon_resultado @if ($empresa->total >= 0 and $empresa->total <= 40) bg-danger text-white @elseif($empresa->total > 40 and $empresa->total <= 70) bg-warning text-white @elseif($empresa->total > 70 and $empresa->total <= 100) bg-success text-white @endif">
@@ -71,7 +69,7 @@
                                             </td>
                                             <td style="width: 10%">
                                                 <a class="btn btn-light"
-                                                    href="/diagnostico/{{ $empresa->nit_empresa }}/analisis"
+                                                    href="/diagnostico/{{ $empresa->nit }}/analisis"
                                                     title="Análisis individual">Completar</a>
                                             </td>
                                         </tr>

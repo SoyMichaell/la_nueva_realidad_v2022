@@ -33,7 +33,7 @@
                         <thead>
                             <tr>
                                 <th>Nit</th>
-                                <td>{{ $empresa->nit }}</td>
+                                <td>{{ $empresa->nit     }}</td>
                             </tr>
                             <tr>
                                 <th>Razón social</th>

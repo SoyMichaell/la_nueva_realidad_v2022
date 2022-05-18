@@ -12,13 +12,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 class DiagnosticoController extends Controller
 {
 
+    /*Rutas fase I*/
     public function index(Request $request)
     {
         $busqueda = trim($request->get('buscar'));
         $empresas = DB::table('resultados')
             ->join('empresas', 'resultados.nit_empresa', '=', 'empresas.nit')
             ->where('estado', '=', 'seleccionado')
-            ->where('nit_empresa', 'LIKE', '%' . $busqueda . '%')
+            ->where('empresas.nit', 'LIKE', '%' . $busqueda . '%')
             ->orWhere('estado', '=', 'seleccionado')
             ->where('razon_social', 'LIKE', '%' . $busqueda . '%')
             ->orWhere('estado', '=', 'seleccionado')
@@ -27,25 +28,34 @@ class DiagnosticoController extends Controller
         return view('diagnostico/faseI.index', compact('empresas', 'busqueda'));
     }
 
+    //Vista diagnostico fase I
+    public function show($id)
+    {
+         $empresa = DB::table('empresas')
+             ->join('respuestas', 'empresas.nit','=','respuestas.nit_empresa')
+             ->join('resultados', 'empresas.nit','=','resultados.nit_empresa')
+             ->where('empresas.nit', $id)
+             ->first();
+         return view('diagnostico/faseI.empresa', compact('empresa'));
+    }
+    /*Fin rutas fase I*/
+
+    /*Rutas fase II*/
     public function analisis_individual(Request $request)
     {
         $busqueda = trim($request->get('buscar'));
         $empresas = DB::table('resultados')
             ->join('empresas', 'resultados.nit_empresa', '=', 'empresas.nit')
+            ->leftJoin('diagnostico_individual', 'resultados.nit_empresa','=','diagnostico_individual.nit_empresa')
+            ->leftJoin('users','diagnostico_individual.id_persona','=','users.id')
             ->where('estado_35', '=', 'seleccionado')
-            ->where('nit_empresa', 'LIKE', '%' . $busqueda . '%')
+            ->where('empresas.nit', 'LIKE', '%' . $busqueda . '%')
             ->orWhere('estado_35', '=', 'seleccionado')
             ->where('razon_social', 'LIKE', '%' . $busqueda . '%')
             ->orWhere('estado_35', '=', 'seleccionado')
             ->where('ciiu', 'LIKE', '%' . $busqueda . '%')
             ->paginate(20);
         return view('diagnostico/faseII.index', compact('empresas', 'busqueda'));
-    }
-
-
-    public function create()
-    {
-        //
     }
 
     public function store(Request $request)
@@ -229,18 +239,7 @@ class DiagnosticoController extends Controller
             }
     }
 
-    /*Vista diagnostico fase I*/
-    public function show($id)
-    {
-        $empresa = DB::table('empresas')
-            ->join('respuestas', 'empresas.nit','=','respuestas.nit_empresa')
-            ->join('resultados', 'empresas.nit','=','resultados.nit_empresa')
-            ->where('empresas.nit', $id)
-            ->first();
-        return view('diagnostico/faseI.empresa', compact('empresa'));
-    }
-
-    /*Vista analisis individual fase II*/
+    //Vista analisis individual fase II
     public function analisis($id)
     {
         $empresa = DB::table('empresas')
@@ -250,16 +249,6 @@ class DiagnosticoController extends Controller
         $usuarios = User::all();
         $exist_diagnostico_empresa = DB::table('diagnostico_individual')->where('nit_empresa', $id)->first();
         return view('diagnostico/faseII.analisis', compact('empresa', 'usuarios', 'exist_diagnostico_empresa'));
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     public function destroy($id)
@@ -273,4 +262,16 @@ class DiagnosticoController extends Controller
             return back();
         }
     }
+
+    /*Fin rutas fase II*/
+
+    /*Rutas DOFA*/
+    public function mdofa(){
+
+        $empresas = DB::table('diagnostico_individual')
+            ->join('empresas','diagnostico_individual.nit_empresa','=','empresas.nit')
+            ->get();
+        return view('diagnostico/dofa.index', compact('empresas'));
+    }
+
 }
