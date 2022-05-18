@@ -229,15 +229,18 @@ class DiagnosticoController extends Controller
             }
     }
 
+    /*Vista diagnostico fase I*/
     public function show($id)
     {
-        $empresa = DB::table('resultados')
-            ->join('empresas', 'resultados.nit_empresa', '=', 'empresas.nit')
-            ->where('nit_empresa', $id)
+        $empresa = DB::table('empresas')
+            ->join('respuestas', 'empresas.nit','=','respuestas.nit_empresa')
+            ->join('resultados', 'empresas.nit','=','resultados.nit_empresa')
+            ->where('empresas.nit', $id)
             ->first();
         return view('diagnostico/faseI.empresa', compact('empresa'));
     }
 
+    /*Vista analisis individual fase II*/
     public function analisis($id)
     {
         $empresa = DB::table('empresas')

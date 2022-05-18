@@ -3,6 +3,7 @@
 use App\Http\Controllers\DiagnosticoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EncuestaController;
+use App\Http\Controllers\GraficoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
@@ -38,10 +39,14 @@ Route::put('diagnostico/{nit}/perspectivacliente', [DiagnosticoController::class
 Route::put('diagnostico/{nit}/perspectivaprocesosinternos', [DiagnosticoController::class, 'perspectivaprocesosinternos']);
 Route::put('diagnostico/{nit}/perspectivafinanciera', [DiagnosticoController::class, 'perspectivafinanciera']);
 
+
+Route::get('grafico/charts', [GraficoController::class, 'charts']);
+
 Route::group(['middleware' => ['auth']], function(){
     Route::resource('usuario', UsuarioController::class);
     Route::resource('empresa', EmpresaController::class);
     Route::resource('encuesta', EncuestaController::class);
     Route::resource('diagnostico', DiagnosticoController::class);
     Route::resource('rol', RolController::class);
+    Route::resource('grafico', GraficoController::class);
 });

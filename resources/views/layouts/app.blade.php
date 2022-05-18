@@ -57,7 +57,7 @@
 <script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
 <script src="{{ asset('assets/js/iziToast.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.nicescroll.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Template JS File -->
 <script src="{{ asset('web/js/stisla.js') }}"></script>
 <script src="{{ asset('web/js/scripts.js') }}"></script>

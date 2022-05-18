@@ -21,7 +21,7 @@
         <i class="fas fa-landmark"></i><span>Empresas</span>
     </a>
 </li>
-<li class="{{Request::is('encuesta') ? 'active' : '' }}">
+<li class="{{ Request::is('encuesta') ? 'active' : '' }}">
     <a class="nav-link" href="/encuesta">
         <i class="fab fa-wpforms"></i><span>Aplicativo encuesta</span>
     </a>
@@ -44,6 +44,16 @@
         </li>
         <li>
             <a class="nav-link" href="/diagnostico/dofa">Matriz DOFA</a>
+        </li>
+    </ul>
+</li>
+<li class="menu-header">RESULTADOS GRAFICOS</li>
+<li class="dropdown">
+    <a href="" class="nav-link has-dropdown" data-toggle="dropdown"><i
+            class="fas fa-project-diagram"></i><span>Resultados encuesta</span></a>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="nav-link" href="/grafico">Graficos</a>
         </li>
     </ul>
 </li>
