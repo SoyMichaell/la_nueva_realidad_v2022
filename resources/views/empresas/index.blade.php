@@ -6,15 +6,9 @@
             <h1 class="page__heading">Empresas</h1>
         </div>
         <div class="section-body">
-            <div class="row">
-                <div class="col-md-8">
-                    <h2 class="section-title">Table</h2>
-                    <p class="section-lead">Listado de empresas</p>
-                </div>
-                <div class="col-md-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-primary" href="/empresa/create">
-                        <i class="fa fa-plus-circle"></i> Nuevo</a>
-                </div>
+            <div class="col-md-12">
+                <h2 class="section-title">Tabla empresas</h2>
+                <p class="section-lead">Listado de empresas</p>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -22,7 +16,8 @@
                         <div class="card-header">
                             <div class="row w-100">
                                 <div class="col-md-6">
-                                    <h4>Listado de empresas registrados</h4>
+                                    <a class="btn btn-primary" href="/empresa/create">
+                                        <i class="fa fa-plus-circle"></i> Nuevo</a>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end">
                                     <form action="{{ route('empresa.index') }}" method="get">

@@ -2,7 +2,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1 class="page__heading"><i class="fas fa-archway"></i> Matriz DOFA</h1>
+            <h1 class="page__heading">Matriz DOFA</h1>
         </div>
         <div class="section-body">
             @if (count($empresas) <= 0)
@@ -24,7 +24,7 @@
                                                 <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i>
                                                     Ver
                                                     matriz DOFA</a>
-                                                <a href="#" class="dropdown-item has-icon"><i class="far fa-edit"></i>
+                                                <a href="/diagnostico/{{$empresa->nit}}/crear-dofa" class="dropdown-item has-icon"><i class="far fa-edit"></i>
                                                     Crear
                                                     matriz DOFA</a>
                                             </div>

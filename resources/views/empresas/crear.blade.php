@@ -7,6 +7,7 @@
         </div>
         <div class="section-body">
             <div class="card">
+                <div class="card-header"><h4>Registro empresa</h4></div>
                 <div class="card-body">
                     <form action="/empresa" method="post">
                         <div class="alert alert-info">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\Models\ResultadoEncuesta;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -267,11 +268,15 @@ class DiagnosticoController extends Controller
 
     /*Rutas DOFA*/
     public function mdofa(){
-
         $empresas = DB::table('diagnostico_individual')
             ->join('empresas','diagnostico_individual.nit_empresa','=','empresas.nit')
             ->get();
         return view('diagnostico/dofa.index', compact('empresas'));
+    }
+
+    public function mcrear($id){
+        $empresa = Empresa::find($id);
+        return view('diagnostico/dofa.crear', compact('empresa'));
     }
 
 }

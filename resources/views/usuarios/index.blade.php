@@ -3,18 +3,12 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h4 class="page__heading">Usuarios</h4>
+            <h1>Usuarios</h1>
         </div>
         <div class="section-body">
-            <div class="row">
-                <div class="col-md-8">
-                    <h2 class="section-title">Table</h2>
-                    <p class="section-lead">Listado de usuarios vinculados al proyecto la nueva realidad</p>
-                </div>
-                <div class="col-md-4 d-flex justify-content-end align-items-center">
-                    <a class="btn btn-primary" href="/usuario/create">
-                        <i class="fa fa-plus-circle"></i> Nuevo</a>
-                </div>
+            <div class="col-md-12">
+                <h2 class="section-title">Tabla usuarios</h2>
+                <p class="section-lead">Listado de usuarios vinculados al proyecto la nueva realidad</p>
             </div>
             <div class="row">
                 <div class="col-lg-12">
@@ -22,15 +16,16 @@
                         <div class="card-header">
                             <div class="row w-100">
                                 <div class="col-md-6">
-                                    <h4>Listado de usuarios registrados</h4>
+                                    <a class="btn btn-primary" href="/usuario/create">
+                                        <i class="fa fa-plus-circle"></i> Nuevo</a>
                                 </div>
                                 <div class="col-md-6 d-flex justify-content-end">
-                                    <form action="{{route('usuario.index')}}" method="get">
+                                    <form action="{{ route('usuario.index') }}" method="get">
                                         <div class="row">
                                             <div class="form-row">
                                                 <div class="col-md-8">
                                                     <input type="text" class="form-control" placeholder="Buscar..."
-                                                        name="buscar" value="{{$busqueda}}" id="buscar">
+                                                        name="buscar" value="{{ $busqueda }}" id="buscar">
                                                 </div>
                                                 <div class="col-auto">
                                                     <input type="submit" class="btn btn-primary" value="Buscar">
@@ -43,7 +38,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
+                                <table class="table table-striped">
                                     <tbody>
                                         <tr>
                                             <th>#</th>
@@ -57,7 +52,7 @@
                                             <th>Estado</th>
                                             <th>--</th>
                                         </tr>
-                                        @if (count($usuarios)<=0)
+                                        @if (count($usuarios) <= 0)
                                             <tr>
                                                 <td colspan="10" class="text-center">No hay resultados</td>
                                             </tr>
@@ -82,7 +77,9 @@
                                                 </td>
                                                 <td>
                                                     <form action="{{ url("usuario/{$usuario->idUser}") }}" method="POST">
-                                                        <a class="btn btn-info" href="{{route('usuario.edit',Str::lower($usuario->slug))}}"><i class="fas fa-edit"></i></a>
+                                                        <a class="btn btn-info"
+                                                            href="{{ route('usuario.edit', Str::lower($usuario->slug)) }}"><i
+                                                                class="fas fa-edit"></i></a>
                                                         @csrf
                                                         @method('DELETE')
                                                         <button class="btn btn-danger" type="submit">
@@ -96,7 +93,7 @@
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-end">
-                                    {{$usuarios->links()}}
+                                    {{ $usuarios->links() }}
                                 </div>
                             </div>
                         </div>
