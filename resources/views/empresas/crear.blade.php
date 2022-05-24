@@ -314,7 +314,7 @@
                             </div>
                             <div class="mb-4 ml-3 mt-4">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                    <button type="submit" class="btn btn-primary btn-block">
                                         Registrar
                                     </button>
                                 </div>

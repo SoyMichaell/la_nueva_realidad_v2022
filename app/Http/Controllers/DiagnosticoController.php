@@ -6,6 +6,7 @@ use App\Models\Empresa;
 use App\Models\ResultadoEncuesta;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Ui\Presets\React;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -32,23 +33,37 @@ class DiagnosticoController extends Controller
     //Vista diagnostico fase I
     public function show($id)
     {
-         $empresa = DB::table('empresas')
-             ->join('respuestas', 'empresas.nit','=','respuestas.nit_empresa')
-             ->join('resultados', 'empresas.nit','=','resultados.nit_empresa')
-             ->where('empresas.nit', $id)
-             ->first();
-         return view('diagnostico/faseI.empresa', compact('empresa'));
+        $empresa = DB::table('empresas')
+            ->join('respuestas', 'empresas.nit', '=', 'respuestas.nit_empresa')
+            ->join('resultados', 'empresas.nit', '=', 'resultados.nit_empresa')
+            ->where('empresas.nit', $id)
+            ->first();
+        return view('diagnostico/faseI.empresa', compact('empresa'));
     }
     /*Fin rutas fase I*/
 
     /*Rutas fase II*/
+
+    //Vista analisis individual fase II
+    public function analisis($id)
+    {
+        $empresa = DB::table('empresas')
+            ->join('respuestas', 'empresas.nit', '=', 'respuestas.nit_empresa')
+            ->where('nit', $id)
+            ->first();
+        $usuarios = User::all();
+        $exist_diagnostico_empresa = DB::table('diagnostico_individual')->where('nit_empresa', $id)->first();
+        $permisos = DB::table('roles_permisos')->where('id_rol', Auth::user()->rol)->get();
+        return view('diagnostico/faseII.analisis', compact('empresa', 'usuarios', 'exist_diagnostico_empresa', 'permisos'));
+    }
+
     public function analisis_individual(Request $request)
     {
         $busqueda = trim($request->get('buscar'));
         $empresas = DB::table('resultados')
             ->join('empresas', 'resultados.nit_empresa', '=', 'empresas.nit')
-            ->leftJoin('diagnostico_individual', 'resultados.nit_empresa','=','diagnostico_individual.nit_empresa')
-            ->leftJoin('users','diagnostico_individual.id_persona','=','users.id')
+            ->leftJoin('diagnostico_individual', 'resultados.nit_empresa', '=', 'diagnostico_individual.nit_empresa')
+            ->leftJoin('users', 'diagnostico_individual.id_persona', '=', 'users.id')
             ->where('estado_35', '=', 'seleccionado')
             ->where('empresas.nit', 'LIKE', '%' . $busqueda . '%')
             ->orWhere('estado_35', '=', 'seleccionado')
@@ -56,7 +71,8 @@ class DiagnosticoController extends Controller
             ->orWhere('estado_35', '=', 'seleccionado')
             ->where('ciiu', 'LIKE', '%' . $busqueda . '%')
             ->paginate(20);
-        return view('diagnostico/faseII.index', compact('empresas', 'busqueda'));
+        $permisos = DB::table('roles_permisos')->where('id_rol', Auth::user()->rol)->get();
+        return view('diagnostico/faseII.index', compact('empresas', 'busqueda', 'permisos'));
     }
 
     public function store(Request $request)
@@ -123,7 +139,8 @@ class DiagnosticoController extends Controller
         }
     }
 
-    public function perspectivacrecimientodesarrollo(Request $request, $id){
+    public function perspectivacrecimientodesarrollo(Request $request, $id)
+    {
         $perspectivacrecimientod = DB::table('diagnostico_individual')->where('nit_empresa', $id)
             ->update([
                 'preguntacd1' => $request->get('preguntacd1'),
@@ -148,16 +165,17 @@ class DiagnosticoController extends Controller
                 'preguntacd17_1' => $request->get('preguntacd17_1'),
             ]);
 
-            if ($perspectivacrecimientod == 1) {
-                Alert::success('Exitoso', 'La información se ha guardado');
-                return back();
-            } else {
-                Alert::warning('Advertencia', 'No se pudo');
-                return back();
-            }
+        if ($perspectivacrecimientod == 1) {
+            Alert::success('Exitoso', 'La información se ha guardado');
+            return back();
+        } else {
+            Alert::warning('Advertencia', 'No se pudo');
+            return back();
+        }
     }
 
-    public function perspectivacliente(Request $request, $id){
+    public function perspectivacliente(Request $request, $id)
+    {
         $perspectivacliente = DB::table('diagnostico_individual')->where('nit_empresa', $id)
             ->update([
                 'preguntac1' => $request->get('preguntac1'),
@@ -172,16 +190,17 @@ class DiagnosticoController extends Controller
                 'preguntac9' => $request->get('preguntac9'),
             ]);
 
-            if ($perspectivacliente == 1) {
-                Alert::success('Exitoso', 'La información se ha guardado');
-                return back();
-            } else {
-                Alert::warning('Advertencia', 'No se pudo');
-                return back();
-            }
+        if ($perspectivacliente == 1) {
+            Alert::success('Exitoso', 'La información se ha guardado');
+            return back();
+        } else {
+            Alert::warning('Advertencia', 'No se pudo');
+            return back();
+        }
     }
 
-    public function perspectivaprocesosinternos(Request $request, $id){
+    public function perspectivaprocesosinternos(Request $request, $id)
+    {
         $perspectivaprocesosinternos = DB::table('diagnostico_individual')->where('nit_empresa', $id)
             ->update([
                 'preguntapi1' => $request->get('preguntapi1'),
@@ -197,16 +216,17 @@ class DiagnosticoController extends Controller
                 'preguntapi8' => $request->get('preguntapi8'),
             ]);
 
-            if ($perspectivaprocesosinternos == 1) {
-                Alert::success('Exitoso', 'La información se ha guardado');
-                return back();
-            } else {
-                Alert::warning('Advertencia', 'No se pudo');
-                return back();
-            }
+        if ($perspectivaprocesosinternos == 1) {
+            Alert::success('Exitoso', 'La información se ha guardado');
+            return back();
+        } else {
+            Alert::warning('Advertencia', 'No se pudo');
+            return back();
+        }
     }
 
-    public function perspectivafinanciera(Request $request, $id){
+    public function perspectivafinanciera(Request $request, $id)
+    {
         $perspectivafinanciera = DB::table('diagnostico_individual')->where('nit_empresa', $id)
             ->update([
                 'preguntapf1' => $request->get('preguntapf1'),
@@ -231,25 +251,13 @@ class DiagnosticoController extends Controller
                 'preguntapf15' => $request->get('preguntapf15'),
             ]);
 
-            if ($perspectivafinanciera == 1) {
-                Alert::success('Exitoso', 'La información se ha guardado');
-                return back();
-            } else {
-                Alert::warning('Advertencia', 'No se pudo');
-                return back();
-            }
-    }
-
-    //Vista analisis individual fase II
-    public function analisis($id)
-    {
-        $empresa = DB::table('empresas')
-            ->join('respuestas','empresas.nit','=','respuestas.nit_empresa')
-            ->where('nit', $id)
-            ->first();
-        $usuarios = User::all();
-        $exist_diagnostico_empresa = DB::table('diagnostico_individual')->where('nit_empresa', $id)->first();
-        return view('diagnostico/faseII.analisis', compact('empresa', 'usuarios', 'exist_diagnostico_empresa'));
+        if ($perspectivafinanciera == 1) {
+            Alert::success('Exitoso', 'La información se ha guardado');
+            return back();
+        } else {
+            Alert::warning('Advertencia', 'No se pudo');
+            return back();
+        }
     }
 
     public function destroy($id)
@@ -267,16 +275,17 @@ class DiagnosticoController extends Controller
     /*Fin rutas fase II*/
 
     /*Rutas DOFA*/
-    public function mdofa(){
+    public function mdofa()
+    {
         $empresas = DB::table('diagnostico_individual')
-            ->join('empresas','diagnostico_individual.nit_empresa','=','empresas.nit')
+            ->join('empresas', 'diagnostico_individual.nit_empresa', '=', 'empresas.nit')
             ->get();
         return view('diagnostico/dofa.index', compact('empresas'));
     }
 
-    public function mcrear($id){
+    public function mcrear($id)
+    {
         $empresa = Empresa::find($id);
         return view('diagnostico/dofa.crear', compact('empresa'));
     }
-
 }

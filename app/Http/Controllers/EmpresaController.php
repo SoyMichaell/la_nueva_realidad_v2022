@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,16 +15,17 @@ class EmpresaController extends Controller
     {
         $busqueda = trim($request->get('buscar'));
         $empresas = DB::table('empresas')
-            ->where('nit', 'LIKE','%'.$busqueda.'%')
-            ->orWhere('razon_social', 'LIKE','%'.$busqueda.'%')
-            ->orWhere('correo', 'LIKE','%'.$busqueda.'%')
-            ->orWhere('telefono1', 'LIKE','%'.$busqueda.'%')
-            ->orWhere('direccion', 'LIKE','%'.$busqueda.'%')
-            ->orWhere('municipio', 'LIKE','%'.$busqueda.'%')
-            ->orderBy('id','asc')
-            ->orderBy('razon_social','asc')
+            ->where('nit', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('razon_social', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('correo', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('telefono1', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('direccion', 'LIKE', '%' . $busqueda . '%')
+            ->orWhere('municipio', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('id', 'asc')
+            ->orderBy('razon_social', 'asc')
             ->paginate(20);
-        return view('empresas.index', compact('empresas','busqueda'));
+        $permisos = DB::table('roles_permisos')->where('id_rol', Auth::user()->rol)->get();
+        return view('empresas.index', compact('empresas', 'busqueda','permisos'));
     }
 
 
@@ -88,8 +90,6 @@ class EmpresaController extends Controller
 
         Alert::success('Exitoso', 'El registro se ha realizado con exito');
         return redirect('/empresa');
-
-
     }
 
 
@@ -130,9 +130,7 @@ class EmpresaController extends Controller
 
         $this->validate($request, $rules, $message);
 
-        DB::table('empresas')->where('id', $id)
-        ->update
-        ([
+        DB::table('empresas')->where('id', $id)->update([
             'matricula' => $request->get('matricula'),
             'organizacion' => $request->get('organizacion'),
             'categoria' => $request->get('categoria'),

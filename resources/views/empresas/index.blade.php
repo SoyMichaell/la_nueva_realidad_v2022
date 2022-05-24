@@ -15,10 +15,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row w-100">
-                                <div class="col-md-6">
-                                    <a class="btn btn-primary" href="/empresa/create">
-                                        <i class="fa fa-plus-circle"></i> Nuevo</a>
-                                </div>
+                                @foreach ($permisos as $permiso)
+                                    @if ($permiso->id_permiso == 'crear-empresa')
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary" href="/empresa/create">
+                                                <i class="fa fa-plus-circle"></i> Nuevo</a>
+                                        </div>
+                                    @endif
+                                @endforeach
                                 <div class="col-md-6 d-flex justify-content-end">
                                     <form action="{{ route('empresa.index') }}" method="get">
                                         <div class="row">
@@ -69,16 +73,23 @@
                                                         {{ $empresa->estado }}</p>
                                                 </td>
                                                 <td>
-                                                    <form action="{{ url("empresa/{$empresa->id}") }}" method="post">
-                                                        <a class="btn btn-info"
-                                                            href="{{ route('empresa.edit', $empresa->id) }}"><i
-                                                                class="fas fa-edit"></i></a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
+                                                    @foreach ($permisos as $permiso)
+                                                        @if ($permiso->id_permiso == 'editar-empresa')
+                                                            <form action="{{ url("empresa/{$empresa->id}") }}"
+                                                                method="post">
+                                                                <a class="btn btn-info"
+                                                                    href="{{ route('empresa.edit', $empresa->id) }}"><i
+                                                                        class="fas fa-edit"></i></a>
+                                                        @endif
+                                                        @if ($permiso->id_permiso == 'eliminar-empresa')
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger" type="submit">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                            </form>
+                                                        @endif
+                                                    @endforeach
                                                 </td>
                                             </tr>
                                         @endforeach

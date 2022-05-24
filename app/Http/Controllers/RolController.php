@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -12,7 +13,8 @@ class RolController extends Controller
     public function index()
     {
         $roles = Rol::all();
-        return view('roles.index', compact('roles'));
+        $permisos = DB::table('roles_permisos')->where('id_rol', Auth::user()->rol)->get();
+        return view('roles.index', compact('roles','permisos'));
     }
 
     public function create()

@@ -15,10 +15,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row w-100">
-                                <div class="col-md-6">
-                                    <a class="btn btn-primary" href="/usuario/create">
-                                        <i class="fa fa-plus-circle"></i> Nuevo</a>
-                                </div>
+                                @foreach ($permisos as $permiso)
+                                    @if ($permiso->id_permiso == 'crear-usuario')
+                                        <div class="col-md-6">
+                                            <a class="btn btn-primary" href="/usuario/create">
+                                                <i class="fa fa-plus-circle"></i> Nuevo</a>
+                                        </div>
+                                    @endif
+                                @endforeach
                                 <div class="col-md-6 d-flex justify-content-end">
                                     <form action="{{ route('usuario.index') }}" method="get">
                                         <div class="row">
@@ -77,14 +81,20 @@
                                                 </td>
                                                 <td>
                                                     <form action="{{ url("usuario/{$usuario->idUser}") }}" method="POST">
-                                                        <a class="btn btn-info"
-                                                            href="{{ route('usuario.edit', Str::lower($usuario->slug)) }}"><i
-                                                                class="fas fa-edit"></i></a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
+                                                        @foreach ($permisos as $permiso)
+                                                            @if ($permiso->id_permiso == 'editar-usuario')
+                                                                <a class="btn btn-info"
+                                                                    href="{{ route('usuario.edit', Str::lower($usuario->slug)) }}"><i
+                                                                        class="fas fa-edit"></i></a>
+                                                            @endif
+                                                            @if ($permiso->id_permiso == 'eliminar-usuario')
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-danger" type="submit">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            @endif
+                                                        @endforeach
                                                         <!--<a class="edit-user btn btn-info" data-id="{{ $usuario->idUser }}"><i class="fas fa-edit"></i></a>-->
                                                     </form>
                                                 </td>

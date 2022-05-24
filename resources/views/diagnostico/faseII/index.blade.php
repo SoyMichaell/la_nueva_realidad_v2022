@@ -61,16 +61,25 @@
                                             <td>{{ $empresa->nit }}</td>
                                             <td>{{ $empresa->razon_social }}</td>
                                             <td>{{ $empresa->municipio }}</td>
-                                            <td><p class="{{$empresa->nombre == "" ? 'badge badge-warning' : 'badge badge-primary' }}">{{ $empresa->nombre == "" ? 'Sin asignar' : $empresa->nombre.' '.$empresa->apellido}}</p></td>
+                                            <td>
+                                                <p
+                                                    class="{{ $empresa->nombre == '' ? 'badge badge-warning' : 'badge badge-primary' }}">
+                                                    {{ $empresa->nombre == '' ? 'Sin asignar' : $empresa->nombre . ' ' . $empresa->apellido }}
+                                                </p>
+                                            </td>
                                             <td>
                                                 <p
                                                     class="icon_resultado @if ($empresa->total >= 0 and $empresa->total <= 40) bg-danger text-white @elseif($empresa->total > 40 and $empresa->total <= 70) bg-warning text-white @elseif($empresa->total > 70 and $empresa->total <= 100) bg-success text-white @endif">
                                                     {{ $empresa->total }}</p>
                                             </td>
                                             <td style="width: 10%">
-                                                <a class="btn btn-light"
-                                                    href="/diagnostico/{{ $empresa->nit }}/analisis"
-                                                    title="Análisis individual">Completar</a>
+                                                @foreach ($permisos as $permiso)
+                                                    @if ($permiso->id_permiso == 'completar-analisis')
+                                                        <a class="btn btn-light"
+                                                            href="/diagnostico/{{ $empresa->nit }}/analisis"
+                                                            title="Análisis individual">Completar</a>
+                                                    @endif
+                                                @endforeach
                                             </td>
                                         </tr>
                                     @endforeach

@@ -10,9 +10,13 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="row w-100">
-                                <div class="col-md-12 d-flex justify-content-end">
-                                    <a class="btn btn-primary" href="/rol/create">Nuevo</a>
-                                </div>
+                                @foreach ($permisos as $permiso)
+                                    @if ($permiso->id_permiso == 'crear-rol')
+                                        <div class="col-md-12 d-flex justify-content-end">
+                                            <a class="btn btn-primary" href="/rol/create">Nuevo</a>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                         <div class="card-body">
@@ -28,14 +32,21 @@
                                             <tr>
                                                 <td>{{ $rol->id }}</td>
                                                 <td>{{ $rol->nombre_rol }}</td>
-                                                <td> 
-                                                    <form action="{{route('rol.destroy', $rol->id)}}" method="post">
-                                                        <a class="btn btn-info" href="/rol/{{ $rol->id }}/edit">Editar</a>
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                                    </form>
-                                                    
+                                                <td>
+                                                    @foreach ($permisos as $permiso)
+                                                        @if ($permiso->id_permiso == 'editar-rol')
+                                                            <form action="{{ route('rol.destroy', $rol->id) }}"
+                                                                method="post">
+                                                                <a class="btn btn-info"
+                                                                    href="/rol/{{ $rol->id }}/edit">Editar</a>
+                                                        @endif
+                                                        @if ($permiso->id_permiso == 'eliminar-rol')
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                                                            </form>
+                                                        @endif
+                                                    @endforeach
                                                 </td>
                                             </tr>
                                         @endforeach

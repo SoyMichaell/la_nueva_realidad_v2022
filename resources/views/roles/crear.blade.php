@@ -27,7 +27,7 @@
                         <label for="">Permisos para este rol:</label>
                         @foreach ($permisos as $permiso)
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="permisos_rol[]" id="flexCheckDefault" value="{{$permiso->id}}">
+                            <input type="checkbox" class="form-check-input" name="permisos_rol[]" id="flexCheckDefault" value="{{$permiso->nombre}}">
                             <label class="form-check-label">{{$permiso->nombre}}</label>
                         </div>
                         @endforeach
